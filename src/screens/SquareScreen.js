@@ -31,13 +31,12 @@ const reducer = (state, action) => {
 export const SquareScreen = () => {
   
   const [state, dispatch ] = useReducer(reducer, { red: 0, blue: 0, green: 0 });
-  console.log('\x1b[41m%s \x1b[0m', '[matt] state', state);
 
   return (
     <View>
       <ColorCounter
         color='Red'
-        onIncrease={() =>  dispatch({type: 'change_red', payload: COLOR_INCREMENT})}
+        onIncrease={() => dispatch({type: 'change_red', payload: COLOR_INCREMENT})}
         onDecrease={() => dispatch({type: 'change_red', payload: -1 * COLOR_INCREMENT})}
       />
       <ColorCounter
