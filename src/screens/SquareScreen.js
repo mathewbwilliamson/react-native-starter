@@ -5,23 +5,24 @@ import { ColorCounter } from "../components/ColorCounter";
 const COLOR_INCREMENT = 15;
 
 const reducer = (state, action) => {
-  // action === { colorToChange: red or green or blue; amount: 15 || -15}
-  switch(action.colorToChange) {
-    case 'red':
-      if ((state.red <= 0 && action.amount < 0) || (state.red >= 255 && action.amount > 0)) {
+  // original action === { colorToChange: red or green or blue; amount: 15 || -15}
+  // standard action === { type: 'change_red', payload: 15 || -15 }
+  switch(action.type) {
+    case 'change_red':
+      if ((state.red <= 0 && action.payload < 0) || (state.red >= 255 && action.payload > 0)) {
         return state;  
       }
-      return { ...state, red: state.red + action.amount };
-    case 'green':
-      if ((state.green <= 0 && action.amount < 0) || (state.green >= 255 && action.amount > 0)) {
+      return { ...state, red: state.red + action.payload };
+    case 'change_green':
+      if ((state.green <= 0 && action.payload < 0) || (state.green >= 255 && action.payload > 0)) {
         return state;  
       }
-      return { ...state, green: state.green + action.amount };
-    case 'blue':
-      if ((state.blue <= 0 && action.amount < 0) || (state.blue >= 255 && action.amount > 0)) {
+      return { ...state, green: state.green + action.payload };
+    case 'change_blue':
+      if ((state.blue <= 0 && action.payload < 0) || (state.blue >= 255 && action.payload > 0)) {
         return state;  
       }
-      return { ...state, blue: state.blue + action.amount };
+      return { ...state, blue: state.blue + action.payload };
     default:
       return state;
   }
@@ -36,18 +37,18 @@ export const SquareScreen = () => {
     <View>
       <ColorCounter
         color='Red'
-        onIncrease={() =>  dispatch({colorToChange: 'red', amount: COLOR_INCREMENT})}
-        onDecrease={() => dispatch({colorToChange: 'red', amount: -1 * COLOR_INCREMENT})}
+        onIncrease={() =>  dispatch({type: 'change_red', payload: COLOR_INCREMENT})}
+        onDecrease={() => dispatch({type: 'change_red', payload: -1 * COLOR_INCREMENT})}
       />
       <ColorCounter
         color='Blue'
-        onIncrease={() => dispatch({colorToChange: 'blue', amount: COLOR_INCREMENT})}
-        onDecrease={() => dispatch({colorToChange: 'blue', amount: -1 * COLOR_INCREMENT})}
+        onIncrease={() => dispatch({type: 'change_blue', payload: COLOR_INCREMENT})}
+        onDecrease={() => dispatch({type: 'change_blue', payload: -1 * COLOR_INCREMENT})}
       />
       <ColorCounter
         color='Green'
-        onIncrease={() => dispatch({colorToChange: 'green', amount: COLOR_INCREMENT})}
-        onDecrease={() => dispatch({colorToChange: 'green', amount: -1 * COLOR_INCREMENT})}
+        onIncrease={() => dispatch({type: 'change_green', payload: COLOR_INCREMENT})}
+        onDecrease={() => dispatch({type: 'change_green', payload: -1 * COLOR_INCREMENT})}
       />
       <View style={{ height: 100, width: 100, backgroundColor: `rgb(${state.red}, ${state.green}, ${state.blue})`}} />
     </View>
